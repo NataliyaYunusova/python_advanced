@@ -1,0 +1,54 @@
+stages:
+  - lint
+  - test
+
+isort:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install isort
+  script:
+    - isort --check-only .
+
+black:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install black
+  script:
+    - black --check .
+
+flake8:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install flake8
+  script:
+    - flake8 .
+
+mypy:
+  stage: lint
+  image: python:3.11
+  before_script:
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install mypy
+  script:
+    - mypy .
+
+test:
+  stage: test
+  image: python:3.11
+  before_script:
+    - python -m venv venv
+    - . venv/bin/activate
+    - pip install -r requirements.txt
+    - pip install pytest pytest-asyncio pytest-cov httpx
+  script:
+    - pytest --maxfail=1 --disable-warnings --cov
