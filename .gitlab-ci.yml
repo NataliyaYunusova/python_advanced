@@ -1,0 +1,28 @@
+stages:
+  - lint
+  - test
+
+isort:
+  stage: lint
+  script:
+    - isort --profile black .
+
+black:
+  stage: lint
+  script:
+    - black --check .
+
+flake8:
+  stage: lint
+  script:
+    - flake8 .
+
+mypy:
+  stage: lint
+  script:
+    - mypy .
+
+pytest:
+  stage: test
+  script:
+    - pytest
