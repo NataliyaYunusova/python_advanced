@@ -7,16 +7,22 @@ stages:
 
 test:
   stage: test
+  image: python:3.11
+  before_script:
+    - pip install -r requirements.txt
+    - pip install pytest
   script:
     - echo "Running tests"
-    - echo "Variable value: $DEFAULT_VARIABLE"
     - pytest
 
 lint:
   stage: lint
+  image: python:3.11
+  before_script:
+    - pip install black isort flake8 mypy
   script:
     - echo "Running linters"
-    - isort .
-    - black .
-    - flake8
+    - isort --check-only .
+    - black --check .
+    - flake8 .
     - mypy .
