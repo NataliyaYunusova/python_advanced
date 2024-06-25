@@ -1,28 +1,22 @@
+variables:
+  DEFAULT_VARIABLE: "default_value"
+
 stages:
-  - lint
   - test
+  - lint
 
-isort:
-  stage: lint
-  script:
-    - isort --profile black .
-
-black:
-  stage: lint
-  script:
-    - black --check .
-
-flake8:
-  stage: lint
-  script:
-    - flake8 .
-
-mypy:
-  stage: lint
-  script:
-    - mypy .
-
-pytest:
+test:
   stage: test
   script:
+    - echo "Running tests"
+    - echo "Variable value: $DEFAULT_VARIABLE"
     - pytest
+
+lint:
+  stage: lint
+  script:
+    - echo "Running linters"
+    - isort .
+    - black .
+    - flake8
+    - mypy .
