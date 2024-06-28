@@ -1,0 +1,39 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.11]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest isort black flake8 mypy
+
+      - name: Run tests
+        run: |
+          echo "Running tests"
+          pytest
+
+      - name: Run linters
+        run: |
+          echo "Running linters"
+          isort --check-only .
+          black --check .
+          flake8 .
+          mypy .
