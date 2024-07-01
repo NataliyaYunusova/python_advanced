@@ -43,6 +43,9 @@ jobs:
           pip install -r requirements.txt
           pip install pytest isort black flake8 mypy
 
+      - name: Print inslalled packages
+        run: pip freeze
+
       - name: Run linters
         run: |
           echo "Running linters"
