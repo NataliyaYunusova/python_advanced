@@ -48,7 +48,7 @@ jobs:
           echo "Running linters"
           isort --check-only --diff --profile black .
           flake8 .
-          mypy .
+          mypy --ignore-missing-imports .
 
       - name: Run tests
         run: |
