@@ -46,8 +46,7 @@ jobs:
       - name: Run linters
         run: |
           echo "Running linters"
-          isort --check-only .
-          black --check .
+          isort --check-only --diff --profile black .
           flake8 .
           mypy .
 
