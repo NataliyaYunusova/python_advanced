@@ -10,10 +10,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.11
+          
       - name: Clear pip cache
         run: |
           rm -rf ~/.cache/pip
@@ -37,11 +38,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest isort black flake8 mypy
 
-      - name: Run tests
-        run: |
-          echo "Running tests"
-          pytest
-
       - name: Run linters
         run: |
           echo "Running linters"
@@ -49,3 +45,8 @@ jobs:
           black --check .
           flake8 .
           mypy .
+
+      - name: Run tests
+        run: |
+          echo "Running tests"
+          pytest
